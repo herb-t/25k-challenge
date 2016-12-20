@@ -117,7 +117,8 @@ Game.prototype.update = function (modifier) {
 	if (this.santaCharacter.x <= (this.giftToGet.x + 32) && this.giftToGet.x <= (this.santaCharacter.x + 32) && this.santaCharacter.y <= (this.giftToGet.y + 32)
  && this.giftToGet.y <= (this.santaCharacter.y + 32)) {
 
-		if (this.giftsCollected < 9) {
+		// if (this.giftsCollected < 9) {
+		if (this.giftsCollected >= 0) {
 			this.giftsCollected++;
 			this.setRandomGiftLocation();
 		}
