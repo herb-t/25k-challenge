@@ -51,6 +51,24 @@ Game.prototype.init = function() {
 
 	this.setRandomGiftLocation();
 	this.animate();
+
+	// var overlay = document.querySelector('.end-game');
+	// TweenLite.to(overlay, 0.5, {
+	// 	delay: 60,
+	// 	opacity: 1,
+	// 	zIndex: 15,
+	// 	ease: Power4.easeOut,
+	// 	onComplete: function() {
+	// 		document.querySelector('#finalScore').innerHTML = this.giftsCollected + ' lost presents!';
+	// 	}
+	// });
+	var overlay = document.querySelector('.end-game');
+	TweenLite.to(overlay, 0.5, {
+		delay: 59,
+		onStart: function() {
+			document.querySelector('#finalScore').innerHTML = this.giftsCollected + ' lost presents!';
+		}.bind(this)
+	});
 };
 
 
@@ -121,17 +139,18 @@ Game.prototype.update = function (modifier) {
 		if (this.giftsCollected >= 0) {
 			this.giftsCollected++;
 			this.setRandomGiftLocation();
+
+			// var overlay = document.querySelector('.end-game');
+			// TweenLite.to(overlay, 0.5, {
+			// 	delay: 60,
+			// 	opacity: 1,
+			// 	zIndex: 15,
+			// 	ease: Power4.easeOut,
+			// 	onStart: function() {
+			// 		document.querySelector('#finalScore').innerHTML = this.giftsCollected + ' lost presents!';
+			// 	}.bind(this)
+			// });
 		}
-		// } else {
-		// 	// document.querySelector('.end-game').classList.add('reveal-end-game');
-		// 	document.querySelector('#finalScore').innerHTML = this.giftsCollected + ' lost presents!';
-		// 	var overlay = document.querySelector('.end-game');
-		// 	TweenLite.to(overlay, 0.6, {
-		// 		opacity: 1,
-		// 		zIndex: 5,
-		// 		ease: Power4.easeOut
-		// 	});
-		// };
 	}
 };
 
@@ -240,13 +259,22 @@ function initializeClock(id, endtime) {
     	}
 
     	if (t.seconds === 1) {
-    		document.querySelector('#finalScore').innerHTML = this.giftsCollected + ' lost presents!';
-    		var overlay = document.querySelector('.end-game');
-			TweenLite.to(overlay, 0.6, {
+   //  		var overlay = document.querySelector('.end-game');
+			// TweenLite.to(overlay, 0.6, {
+			// 	delay: 0.5,
+			// 	opacity: 1,
+			// 	zIndex: 5,
+			// 	ease: Power4.easeOut
+			// });
+			var overlay = document.querySelector('.end-game');
+			TweenLite.to(overlay, 0.5, {
 				delay: 0.5,
 				opacity: 1,
-				zIndex: 5,
+				zIndex: 15,
 				ease: Power4.easeOut
+				// onStart: function() {
+				// 	document.querySelector('#finalScore').innerHTML = this.giftsCollected + ' lost presents!';
+				// }.bind(this)
 			});
     	}
 	}
