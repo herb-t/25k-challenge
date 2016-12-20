@@ -63,7 +63,10 @@ Game.prototype.drawBackground = function() {
 Game.prototype.drawSanta = function() {
 
 	this.santa = new Image();
-	this.santa.src = 'images/santa.png';
+	this.santaFlip = new Image();
+	// this.santa.src = 'images/santa.png';
+	this.santa.src = 'images/santa-l_sml.gif';
+	this.santaFlip.src = 'images/santa-r_sml.gif';
 };
 
 Game.prototype.drawGift = function() {
@@ -99,14 +102,17 @@ Game.prototype.update = function (modifier) {
 		if (this.santaCharacter.x >= 0) {
 			this.santaCharacter.x -= this.santaCharacter.speed * modifier;
 			// TweenLite.to(this.santaCharacter, 0.3, {scale: 180});
-			this.santa.src = 'images/santaL.png';
+			// this.santa.src = 'images/santaL.png';
+			// this.santa.src = 'images/santaL.png';
+			this.santa.src = 'images/santa-l_sml.gif';
 		};
 	}
 	if (39 in keysDown) { // Player holding right
 		if (this.santaCharacter.x <= (this.canvas.width - 32)) {
 			this.santaCharacter.x += this.santaCharacter.speed * modifier;
 			// TweenLite.to(this.santaCharacter, 0.3, {scale: 0});
-			this.santa.src = 'images/santa.png';
+			// this.santa.src = 'images/santa.png';
+			this.santa.src = 'images/santa-r_sml.gif';
 		};
 	}
 
