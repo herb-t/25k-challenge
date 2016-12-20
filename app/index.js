@@ -120,16 +120,17 @@ Game.prototype.update = function (modifier) {
 		if (this.giftsCollected < 9) {
 			this.giftsCollected++;
 			this.setRandomGiftLocation();
-		} else {
-			// document.querySelector('.end-game').classList.add('reveal-end-game');
-			document.querySelector('#finalScore').innerHTML = this.giftsCollected + ' lost presents!';
-			var overlay = document.querySelector('.end-game');
-			TweenLite.to(overlay, 0.6, {
-				opacity: 1,
-				zIndex: 5,
-				ease: Power4.easeOut
-			});
-		};
+		}
+		// } else {
+		// 	// document.querySelector('.end-game').classList.add('reveal-end-game');
+		// 	document.querySelector('#finalScore').innerHTML = this.giftsCollected + ' lost presents!';
+		// 	var overlay = document.querySelector('.end-game');
+		// 	TweenLite.to(overlay, 0.6, {
+		// 		opacity: 1,
+		// 		zIndex: 5,
+		// 		ease: Power4.easeOut
+		// 	});
+		// };
 	}
 };
 
@@ -212,3 +213,46 @@ Game.prototype._onResize = function() {
 };
 
 var game = new Game();
+
+// timer
+function getTimeRemaining(endtime) {
+	var t = Date.parse(endtime) - Date.parse(new Date());
+	var seconds = Math.floor((t / 1000) % 60);
+
+	return {
+		'total': t,
+		'seconds': seconds
+	};
+}
+
+function initializeClock(id, endtime) {
+    var clock = document.querySelector('#timer');
+    var secondsSpan = clock.querySelector('#seconds');
+
+    function updateClock() {
+        var t = getTimeRemaining(endtime);
+
+        secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+    	if (t.total <= 0) {
+    		clearInterval(timeinterval);	
+    	}
+
+    	if (t.seconds === 1) {
+    		document.querySelector('#finalScore').innerHTML = this.giftsCollected + ' lost presents!';
+    		var overlay = document.querySelector('.end-game');
+			TweenLite.to(overlay, 0.6, {
+				delay: 0.5,
+				opacity: 1,
+				zIndex: 5,
+				ease: Power4.easeOut
+			});
+    	}
+	}
+
+    updateClock();
+    var timeinterval = setInterval(updateClock, 1000);
+}
+
+var deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000);
+initializeClock('timer-container', deadline);
