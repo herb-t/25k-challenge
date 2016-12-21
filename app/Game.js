@@ -7,12 +7,8 @@ var Game = function() {
 
 	this.canvas = document.querySelector('#game');
 	this.ctx = this.canvas.getContext('2d');
-	// this.canvas.width = 480;
-	// this.canvas.height = 800;
 	this.canvas.width = window.innerWidth;
 	this.canvas.height = window.innerHeight;
-	
-	// document.body.appendChild(this.canvas);
 
 	addEventListener('keydown', function (e) {
 		keysDown[e.keyCode] = true;
@@ -22,7 +18,8 @@ var Game = function() {
 		delete keysDown[e.keyCode];
 	}, false);
 
-	// initialize
+	this.displayCollected = document.querySelector('#collection');
+
 	this.init();
 
 	window.addEventListener('resize', this._onResize.bind(this));
@@ -44,6 +41,7 @@ Game.prototype.init = function() {
 
 	this.giftToGet = {};
 	this.giftsCollected = 0;
+	this.displayCollected.innerHTML = this.giftsCollected;
 
 	this.santaCharacter.x = this.canvas.width / 2;
 	this.santaCharacter.y = this.canvas.height / 2;
@@ -52,6 +50,7 @@ Game.prototype.init = function() {
 	this.setRandomGiftLocation();
 	this.animate();
 
+	// tally and display score after 60s
 	var overlay = document.querySelector('.end-game');
 	TweenLite.to(overlay, 0.5, {
 		delay: 59,
@@ -125,21 +124,12 @@ Game.prototype.update = function (modifier) {
 	if (this.santaCharacter.x <= (this.giftToGet.x + 32) && this.giftToGet.x <= (this.santaCharacter.x + 32) && this.santaCharacter.y <= (this.giftToGet.y + 32)
  && this.giftToGet.y <= (this.santaCharacter.y + 32)) {
 
-		// if (this.giftsCollected < 9) {
 		if (this.giftsCollected >= 0) {
 			this.giftsCollected++;
-			this.setRandomGiftLocation();
 
-			// var overlay = document.querySelector('.end-game');
-			// TweenLite.to(overlay, 0.5, {
-			// 	delay: 60,
-			// 	opacity: 1,
-			// 	zIndex: 15,
-			// 	ease: Power4.easeOut,
-			// 	onStart: function() {
-			// 		document.querySelector('#finalScore').innerHTML = this.giftsCollected + ' lost presents!';
-			// 	}.bind(this)
-			// });
+			this.displayCollected.innerHTML = this.giftsCollected;
+
+			this.setRandomGiftLocation();
 		}
 	}
 };
@@ -157,14 +147,6 @@ Game.prototype.render = function () {
 
 	this.ctx.drawImage(this.santa, this.santaCharacter.x, this.santaCharacter.y);
 	this.ctx.drawImage(this.gift, this.giftToGet.x, this.giftToGet.y);
-
-	// Score
-	// this.ctx.fillStyle = 'rgb(152, 0, 0)';
-	this.ctx.fillStyle = 'rgb(255, 255, 255)';
-	this.ctx.font = '26px PT Sans';
-	this.ctx.textAlign = 'left';
-	this.ctx.textBaseline = 'top';
-	this.ctx.fillText('Presents Collected: ' + this.giftsCollected, 32, 32);
 };
 
 // The main game loop

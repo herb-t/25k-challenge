@@ -31,12 +31,20 @@ p,
 #finalScore
   font 26px/32px 'Pt Sans', sans-serif
   color #fff
-  // text-shadow 0 1px 1px #000
   
 h1
   font 82px/92px 'Bilbo Swash Caps', serif
   color #fff
-  // text-shadow 0 1px 1px #000
+
+.presents,
+#collection
+  font 400 24px/32px 'Pt Sans', sans-serif
+  color #FFF
+  color #58B996
+  
+.presents
+  padding-right 10px
+  border-right 3px solid #f07562
 
 #game
   position relative
@@ -77,7 +85,7 @@ h1
   display none
 
 .play-again
-  font 400 22px/30px sans-serif
+  font 400 22px/26px sans-serif
   color #58b996
   padding 5px 10px
   margin-top 20px
@@ -102,9 +110,26 @@ h1
 .timer-container
   position fixed
   z-index 10
-  top 2px
-  right 50px 
+  top 10px
+  right 10px
+  display -webkit-flex
+  display -moz-flex
+  display -ms-flex
+  display -o-flex
+  display flex
+  -webkit-flex-direction row
+  -ms-flex-direction row
+  flex-direction row
+  -webkit-align-items center
+  align-items center
+  padding 5px 10px 5px 5px
+  border 3px solid #f07562
+  background #6e3e00
+  background #F07562
+  background rgba(255, 255, 255, 0.9)
 
+.collected
+  margin-right 20px
 
 #timer
   display -webkit-flex
@@ -125,14 +150,16 @@ h1
     color #f07562
   
   #timeLeft
-    font 400 16px/32px 'PT Sans', sans-serif
+    font 400 16px/20px 'PT Sans', sans-serif
     color #fff
+    text-decoration underline
+    color #58B996 
 
 // mobile d pad
 .directional-pad
   position fixed
   left 50%
-  top 90%
+  top 89%
   z-index 2
   -webkit-transform translate(-50%, -50%)
   -moz-transform translate(-50%, -50%)
@@ -166,28 +193,28 @@ h1
   height 0
   border-style solid
   border-width 0 15px 30px 15px
-  border-color transparent transparent #fff transparent
+  border-color transparent transparent rgba(255, 255, 255, 0.9) transparent
 
 #down
   width 0
   height 0
   border-style solid
   border-width 30px 15px 0 15px
-  border-color #fff transparent transparent transparent
+  border-color rgba(255, 255, 255, 0.9) transparent transparent transparent
 
 #left
   width 0
   height 0
   border-style solid
   border-width 15px 30px 15px 0
-  border-color transparent #fff transparent transparent
+  border-color transparent rgba(255, 255, 255, 0.9) transparent transparent
 
 #right
   width 0
   height 0
   border-style solid
   border-width 15px 0 15px 30px
-  border-color transparent transparent transparent #fff
+  border-color transparent transparent transparent rgba(255, 255, 255, 0.9)
 
 @media screen and (max-width 480px)
   body
@@ -195,7 +222,22 @@ h1
     background-image url('../images/bg-ice-tile-x.jpg')
     
   .timer-container
-    right -2px
+    right 0
+    left 50%
+    min-width 275px
+    -webkit-transform translateX(-50%)
+    -moz-transform translateX(-50%)
+    -ms-transform translateX(-50%)
+    -o-transform translateX(-50%)
+    transform translateX(-50%)
+    
+  .presents,
+  #collection
+    font-size 18px
+    
+  #timer #seconds
+    font-size 20px
+    line-height 22px  
 
   canvas
     width 100%
