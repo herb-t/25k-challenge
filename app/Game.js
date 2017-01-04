@@ -36,7 +36,7 @@ Game.prototype.init = function() {
 
 	// Game objects
 	this.santaCharacter = {
-		speed: 256 // movement in pixels per second
+		speed: (256 * 2) // movement in pixels per second
 	};
 
 	this.giftToGet = {};
@@ -49,6 +49,10 @@ Game.prototype.init = function() {
 
 	this.setRandomGiftLocation();
 	this.animate();
+
+	this.moving = false;
+	this.movingX = false;
+	this.movingY = false;
 
 	// tally and display score after 60s
 	var overlay = document.querySelector('.end-game');
@@ -96,27 +100,88 @@ Game.prototype.setRandomGiftLocation = function () {
 // Update game objects
 Game.prototype.update = function (modifier) {
 
+	// if (38 in keysDown) { // Player holding up
+	// 	if (this.santaCharacter.y >= 128) {
+	// 		this._moveUp(modifier);
+	// 	};
+	// }
+	// if (40 in keysDown) { // Player holding down
+	// 	if (this.santaCharacter.y <= this.canvas.height - 200) {
+	// 		this._moveDown(modifier);
+	// 	};
+	// }
+	// if (37 in keysDown) { // Player holding left
+	// 	if (this.santaCharacter.x >= 128) {
+	// 		this._moveLeft(modifier);
+	// 		this.santa.src = 'images/santa-sleigh.png';
+
+	// 	};
+	// }
+	// if (39 in keysDown) { // Player holding right
+	// 	if (this.santaCharacter.x <= (this.canvas.width - 200)) {
+	// 		this._moveRight(modifier);
+	// 		this.santa.src = 'images/santa-sleigh_flip.png';
+	// 	};
+	// }
+	var diff = 20;
+
+	// if (38 in keysDown) { // Player holding up
+	// 	// if (this.santaCharacter.y >= 64) {
+	// 	// 	this._moveUp(modifier);
+	// 	// };
+	// 	if (this.santaCharacter.y >= 64 && this.santaCharacter.y > this.santaCharacter.y - diff) {
+	// 		this._moveUp(modifier);
+	// 	};
+	// }
+	// if (40 in keysDown) { // Player holding down
+	// 	// if (this.santaCharacter.y <= this.canvas.height - 128) {
+	// 	// 	this._moveDown(modifier);
+	// 	// };
+	// 	if (this.santaCharacter.y <= this.canvas.height - 128 && this.santaCharacter.y + diff) {
+	// 		this._moveDown(modifier);
+	// 	};
+	// }
+	// if (37 in keysDown) { // Player holding left
+	// 	if (this.santaCharacter.x >= 64) {
+	// 		this._moveLeft(modifier);
+	// 		this.santa.src = 'images/santa-sleigh.png';
+
+	// 	};
+	// }
+	// if (39 in keysDown) { // Player holding right
+	// 	if (this.santaCharacter.x <= (this.canvas.width - 128)) {
+	// 		this._moveRight(modifier);
+	// 		this.santa.src = 'images/santa-sleigh_flip.png';
+	// 	};
+	// }
+	
 	if (38 in keysDown) { // Player holding up
-		if (this.santaCharacter.y >= 0) {
-			this.santaCharacter.y -= this.santaCharacter.speed * modifier;
+
+		if (this.santaCharacter.y >= 64 && !this.movingY) {
+			
+			this._moveUp(modifier);
 		};
 	}
 	if (40 in keysDown) { // Player holding down
-		if (this.santaCharacter.y <= this.canvas.height - 64) {
-			this.santaCharacter.y += this.santaCharacter.speed * modifier;
+
+		if (this.santaCharacter.y <= this.canvas.height - 128 && !this.movingY) {
+			this._moveDown(modifier);
 		};
 	}
 	if (37 in keysDown) { // Player holding left
-		if (this.santaCharacter.x >= 0) {
-			this.santaCharacter.x -= this.santaCharacter.speed * modifier;
-			this.santa.src = 'images/santa-sleigh.png';
 
+		this.santa.src = 'images/santa-sleigh.png';
+
+		if (this.santaCharacter.x >= 64 && !this.movingX) {
+			this._moveLeft(modifier);
 		};
 	}
 	if (39 in keysDown) { // Player holding right
-		if (this.santaCharacter.x <= (this.canvas.width - 32)) {
-			this.santaCharacter.x += this.santaCharacter.speed * modifier;
-			this.santa.src = 'images/santa-sleigh_flip.png';
+
+		this.santa.src = 'images/santa-sleigh_flip.png';
+
+		if (this.santaCharacter.x <= (this.canvas.width - 128) && !this.movingX) {
+			this._moveRight(modifier);
 		};
 	}
 
@@ -134,12 +199,60 @@ Game.prototype.update = function (modifier) {
 	}
 };
 
+Game.prototype._moveUp = function(modifier) {
+	this.movingY = true;
+
+	TweenLite.to(this.santaCharacter, 0.75, {
+		y: this.santaCharacter.y - this.santaCharacter.speed * modifier,
+		ease: Power1.easeOut,
+		onComplete: this._hasFinishedMovingY.bind(this)
+	});
+};
+
+Game.prototype._moveDown = function(modifier) {
+	this.movingY = true;
+
+	TweenLite.to(this.santaCharacter, 0.75, {
+		y: this.santaCharacter.y + this.santaCharacter.speed * modifier,
+		ease: Power1.easeOut,
+		onComplete: this._hasFinishedMovingY.bind(this)
+	});
+};
+
+Game.prototype._moveLeft = function(modifier) {
+	this.movingX = true;
+
+	TweenLite.to(this.santaCharacter, 0.75, {
+		x: this.santaCharacter.x - this.santaCharacter.speed * modifier,
+		ease: Power1.easeOut,
+		onComplete: this._hasFinishedMovingX.bind(this)
+	});
+};
+
+Game.prototype._moveRight = function(modifier) {
+	this.movingX = true;
+
+	TweenLite.to(this.santaCharacter, 0.75, {
+		x: this.santaCharacter.x + this.santaCharacter.speed * modifier,
+		ease: Power1.easeOut,
+		onComplete: this._hasFinishedMovingX.bind(this)
+	});
+};
+
+Game.prototype._hasFinishedMovingX = function() {
+	this.movingX = false;
+};
+
+Game.prototype._hasFinishedMovingY = function() {
+	this.movingY = false;
+};
+
+Game.prototype._hasFinishedMoving = function() {
+	this.moving = false;
+};
+
 // Draw everything
 Game.prototype.render = function () {
-
-	// this.ctx.drawImage(this.bgImage, 0, 0);
-
-	// this.ctx.drawImage(this.bgImage, 0, 0, this.canvas.width, this.canvas.height);
 
 	var repeatPattern = this.ctx.createPattern(this.bgImage, 'repeat'); // Create a pattern with this image, and set it to 'repeat'.
  	this.ctx.fillStyle = repeatPattern;
@@ -154,7 +267,7 @@ Game.prototype.animate = function () {
 	var now = Date.now();
 	var delta = now - this.then;
 
-	this.update(delta / 1000);
+	this.update(delta / 150);
 	this.render();
 
 	this.then = now;
@@ -165,33 +278,45 @@ Game.prototype.animate = function () {
 // d pad movement
 Game.prototype.dPad = function() {
 	// mobile d pad movement
-	var top = document.querySelector('#top');
+	var up = document.querySelector('#top');
 	var left = document.querySelector('#left');
 	var right = document.querySelector('#right');
 	var bottom = document.querySelector('#down');
 
-	top.addEventListener('mousedown', function() {
+	up.addEventListener('click', function() {
 		if (this.santaCharacter.y >= 0) {
-			this.santaCharacter.y -= this.santaCharacter.speed * 0.1;
+			TweenLite.to(this.santaCharacter, 0.25, {
+				y: this.santaCharacter.y - 25.5,
+				ease: Power1.easeOut
+			});
 		};
 	}.bind(this));
 
-	down.addEventListener('mousedown', function() {
+	down.addEventListener('click', function() {
 		if (this.santaCharacter.y <= this.canvas.height - 64) {
-			this.santaCharacter.y += this.santaCharacter.speed * 0.1;
+			TweenLite.to(this.santaCharacter, 0.25, {
+				y: this.santaCharacter.y + 25.5,
+				ease: Power1.easeOut
+			});
 		};
 	}.bind(this));
 
-	left.addEventListener('mousedown', function() {
+	left.addEventListener('click', function() {
 		if (this.santaCharacter.x >= 0) {
-			this.santaCharacter.x -= this.santaCharacter.speed * 0.1;
+			TweenLite.to(this.santaCharacter, 0.25, {
+				x: this.santaCharacter.x - 25.5,
+				ease: Power1.easeOut
+			});
 			this.santa.src = 'images/santa-sleigh.png';
 		};
 	}.bind(this));
 
-	right.addEventListener('mousedown', function() {
+	right.addEventListener('click', function() {
 		if (this.santaCharacter.x <= (this.canvas.width - 32)) {
-			this.santaCharacter.x += this.santaCharacter.speed * 0.1;
+			TweenLite.to(this.santaCharacter, 0.25, {
+				x: this.santaCharacter.x + 25.5,
+				ease: Power1.easeOut
+			});
 			this.santa.src = 'images/santa-sleigh_flip.png';
 		};
 	}.bind(this));
