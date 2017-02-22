@@ -1,0 +1,55 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title>25k Christmas Challenge</title>
+    <meta name="description" content="Make something cool, keep it under 25K!">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Bilbo+Swash+Caps|PT+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+  </head>
+  
+  <body>
+    
+    <!-- end game overlay -->
+    <div class="end-game">
+      <h1>Merry Christmas</h1>
+      <p>You helped Santa collect <span id="finalScore"></span></p>
+      <a href="/" class="play-again">Play Again</a>
+    </div>
+
+    
+
+    <!-- timer -->
+    <div class="timer-container">
+      <!-- points -->
+      <div class="collected">
+        <span class="presents">Presents Collected: <span id="collection"></span></span>
+      </div>
+      <div id="timer">
+        <span id="timeLeft">Time Left </span>
+        <span id="seconds"></span>
+      </div>
+    </div>
+
+    <!-- canvas element -->
+    <main class="game-container">
+      <canvas id="game"></canvas>
+
+      <!-- mobile D Pad -->
+      <div class="directional-pad">
+        <div class="d-pad-btn" id="top"></div>
+        <div class="left-right">
+          <div class="d-pad-btn" id="left"></div>
+          <div class="d-pad-btn" id="right"></div>
+        </div>
+        <div class="d-pad-btn" id="down"></div>
+      </div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenLite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/CSSPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/easing/EasePack.min.js"></script>
+    <script src="js/main.build.js"></script>
+  </body>
+
+</html>
