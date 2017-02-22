@@ -16,19 +16,19 @@ function getTimeRemaining(endtime) {
 }
 
 function initializeClock(id, endtime) {
-    var timer = document.querySelector('#timer');
-    var secondsDisplay = timer.querySelector('#seconds');
+  var timer = document.querySelector('#timer');
+  var secondsDisplay = timer.querySelector('#seconds');
 
-    function updateClock() {
-        var time = getTimeRemaining(endtime);
+  function updateClock() {
+    var time = getTimeRemaining(endtime);
 
-        secondsDisplay.innerHTML = ('0' + time.seconds).slice(-2);
+    secondsDisplay.innerHTML = ('0' + time.seconds).slice(-2);
 
-    	if (time.total <= 0) {
-    		clearInterval(timeinterval);	
-    	}
+  	if (time.total <= 0) {
+  		clearInterval(timeinterval);
+  	}
 
-    	if (time.seconds === 1) {
+  	if (time.seconds === 1) {
 			var overlay = document.querySelector('.end-game');
 			TweenLite.to(overlay, 0.5, {
 				delay: 0.5,
@@ -36,11 +36,11 @@ function initializeClock(id, endtime) {
 				zIndex: 15,
 				ease: Power4.easeOut
 			});
-    	}
-	}
+  	}
+   }
 
-    updateClock();
-    var timeinterval = setInterval(updateClock, 1000);
+  updateClock();
+  var timeinterval = setInterval(updateClock, 1000);
 }
 
 var countdownEndtime = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000);
