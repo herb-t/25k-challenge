@@ -1,0 +1,12 @@
+{
+  "version": 3,
+  "file": "vendor.js",
+  "sources": [
+    "app/vendor/rAF.js"
+  ],
+  "names": [],
+  "mappings": "AAAA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA",
+  "sourcesContent": [
+    "// http://paulirish.com/2011/requestanimationframe-for-smart-animating/\r\n// http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating\r\n\r\n// requestAnimationFrame polyfill by Erik MÃ¶ller. fixes from Paul Irish and Tino Zijdel\r\n\r\n// MIT license\r\n\r\n(function() {\r\n    var lastTime = 0;\r\n    var vendors = ['ms', 'moz', 'webkit', 'o'];\r\n    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {\r\n        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];\r\n        window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']\r\n                                   || window[vendors[x]+'CancelRequestAnimationFrame'];\r\n    }\r\n\r\n    if (!window.requestAnimationFrame)\r\n        window.requestAnimationFrame = function(callback, element) {\r\n            var currTime = new Date().getTime();\r\n            var timeToCall = Math.max(0, 16 - (currTime - lastTime));\r\n            var id = window.setTimeout(function() { callback(currTime + timeToCall); },\r\n              timeToCall);\r\n            lastTime = currTime + timeToCall;\r\n            return id;\r\n        };\r\n\r\n    if (!window.cancelAnimationFrame)\r\n        window.cancelAnimationFrame = function(id) {\r\n            clearTimeout(id);\r\n        };\r\n}());"
+  ]
+}
